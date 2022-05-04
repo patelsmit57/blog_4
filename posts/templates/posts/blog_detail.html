@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}{{blog.title |title}}{% endblock pagetitle %}
+
+{% block pagebody %}
+
+{% include 'posts/include/nav.html' %}
+
+
+<h1>{{blog.title}}</h1>
+<form action="/read_leter/" method='POST'>
+{% csrf_token %}
+<input type="hidden" name='blog_id' value={{blog.id}}>
+{% if session %}
+<button>Remove Read Letter blog</button>
+{% else %}
+<button>Read Letter</button>
+{% endif %}
+</form>
+
+<img src="{{blog.image.url}}" alt="{{blog.title}}" height=100px width=100px>
+
+<form action="/favorite/" method='post'>
+    {% csrf_token %}
+    <input type='hidden' name='blog_id_favorite' value={{blog.id}}>
+    {% if is_favorite %}
+        <button>Remove for favorite</button>
+    {% else %}
+        <button>Favorite</button>
+    {% endif %}
+</form>
+
+
+<h2>Blog Author : {{blog.author}}</h2>
+<h3>Date : {{blog.date}}</h3>
+<p>{{blog.text |linebreaks}}</p>
+
+
+<form action="/blog/{{blog.slug}}/" method='post'>
+{% csrf_token %}
+{{forms}}
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<br>
+{% for comm in comment %}
+<h4><span>{{comm.user_name}} : {{comm.text}}</span></h4>
+{% endfor %}
+
+{% endblock pagebody %}

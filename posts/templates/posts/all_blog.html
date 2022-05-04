@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}All Blog{% endblock pagetitle %}
+
+{% block pagebody %}
+
+{% include 'posts/include/nav.html' %}
+
+<ul>
+{% for b in blog %}
+<li><a href= {% url 'blog_detail' b.slug %}>
+    <img src="{{b.image.url}}" alt="{{b.title}}" height=100px width=100px>
+    <p>{{b.text |truncatechars:100}}</p>
+    </a>
+</li>
+{% endfor %}
+</ul>
+{% endblock pagebody %}

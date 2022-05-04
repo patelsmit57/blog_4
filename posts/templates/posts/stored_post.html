@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}Read-Leter-blog{% endblock pagetitle %}
+
+{% block pagebody %}
+
+{% include 'posts/include/nav.html' %}
+
+{% if not has_post %}
+<h1>NO read blog letter please add blog</h1>
+{% else %}
+<ul>
+{% for b in post %}
+<li><a href= {% url 'blog_detail' b.slug %}>
+    <img src="{{b.image.url}}" alt="{{b.title}}" height=100px width=100px>
+    <p>{{b.text |truncatechars:100}}</p>
+    </a>
+</li>
+{% endfor %}
+</ul>
+
+{% endif %}
+
+{% endblock pagebody %}
